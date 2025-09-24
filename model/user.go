@@ -6,7 +6,7 @@ type User struct {
 	Name         string `gorm:"type:varchar(180);unique_index"`
 	Pass         []byte
 	Admin        bool
-	Applications []Application // 一个用户可以有多个应用
+	Applications []Application `gorm:"many2many:app_users;joinForeignKey:UserID;AssociationForeignKey:AppID"` // 一个用户可以有多个应用
 	Clients      []Client      // 一个用户可以有多个客户端
 	Plugins      []PluginConf
 }

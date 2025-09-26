@@ -14,3 +14,15 @@ func TryGetUserID(ctx *gin.Context) uint {
 
 	return user.ID
 }
+
+func GetUserID(ctx *gin.Context) uint {
+	id := TryGetUserID(ctx)
+	if id == 0 {
+		panic("token and user may not be null")
+	}
+	return id
+}
+
+func GetTokenID(ctx *gin.Context) string {
+	return ctx.MustGet("tokenid").(string)
+}

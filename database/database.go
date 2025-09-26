@@ -37,7 +37,7 @@ func initAppUsersTable(db *gorm.DB) error {
 	// 执行创建表的 SQL
 	createTableSQL := `
 	PRAGMA foreign_keys = ON;
-	CREATE TABLE app_users (
+	CREATE TABLE IF NOT EXISTS app_users (
 		app_id INTEGER NOT NULL,
 		user_id INTEGER NOT NULL,
 		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,  -- 对应 autoCreateTime
@@ -46,6 +46,8 @@ func initAppUsersTable(db *gorm.DB) error {
 		FOREIGN KEY (app_id) REFERENCES applications(id) ON DELETE CASCADE,
 		FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 	);`
+	// 判断表是否存在
+
 	if err := db.Exec(createTableSQL).Error; err != nil {
 		return err
 	}
